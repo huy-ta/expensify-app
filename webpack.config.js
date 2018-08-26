@@ -22,7 +22,7 @@ module.exports = {
             test: /\.s?css$/ // both css and scss
         }]
     },
-    mode: 'development',
+    mode: 'production',
     devtool: 'cheap-module-eval-source-map',
     devServer: {
         contentBase: publicPath,
