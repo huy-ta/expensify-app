@@ -3,7 +3,7 @@ const path = require('path');
 const publicPath = path.join(__dirname, 'public');
 
 module.exports = {
-    entry: './src/app.js', 
+    entry: './src/app.js',
     output: {
         path: publicPath,
         filename: 'bundle.js'
@@ -22,10 +22,4 @@ module.exports = {
             test: /\.s?css$/ // both css and scss
         }]
     },
-    mode: 'production',
-    devtool: 'source-map',
-    devServer: {
-        contentBase: publicPath,
-        historyApiFallback: true
-    }
 };
