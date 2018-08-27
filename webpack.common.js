@@ -13,7 +13,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            title: 'Expensify App Hehe2',
+            title: 'Expensify App',
             favicon: './src/assets/favicon.png',
             filename: 'index.html',
             template: './src/assets/index.html',
@@ -26,7 +26,7 @@ module.exports = {
     module: {
         rules: [{
             loader: 'babel-loader',
-            test: /\.js$/, // regular expressions
+            test: /\.js$/, 
             exclude: /node_modules/
         }, {
             test: /\.(png|svg|jpg|gif)$/,
