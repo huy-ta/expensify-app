@@ -17,7 +17,8 @@ module.exports = {
     entry: './src/index.js', 
     output: {
         path: distPath,
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
