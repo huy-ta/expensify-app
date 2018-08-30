@@ -1,6 +1,10 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { addExpense, startAddExpense, editExpense, removeExpense, setExpenses, startSetExpenses } from '../../actions/expenses';
+import { 
+    addExpense, startAddExpense, 
+    editExpense, 
+    removeExpense, startRemoveExpense,
+    setExpenses, startSetExpenses } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
@@ -20,6 +24,25 @@ describe('removeExpense', () => {
         expect(action).toEqual({
             type: 'REMOVE_EXPENSE',
             id: '123abc'
+        });
+    });
+});
+
+describe('startRemoveExpense', () => {
+    test('should remove expense from firebase', (done) => {
+        const id = expenses[1].id;
+        const store = createMockStore({});
+        store.dispatch(startRemoveExpense({ id })).then(() => {
+            const actions = store.getActions();
+            expect(actions[0]).toEqual({
+                type: 'REMOVE_EXPENSE',
+                id
+            });
+
+            return database.ref(`expenses/${id}`).once('value');
+        }).then((snapshot) => {
+            expect(snapshot.val()).toBeFalsy();
+            done();
         });
     });
 });
@@ -49,7 +72,7 @@ describe('addExpense', () => {
 
 describe('startAddExpense', () => {
     test('should add expense to database and store', (done) => { // Asynchronous test
-        const store = createMockStore();
+        const store = createMockStore({});
         const expenseData = {
             description: 'Mouse',
             amount: 3000,
