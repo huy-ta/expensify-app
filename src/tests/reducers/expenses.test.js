@@ -75,3 +75,14 @@ describe('expensesReducer', () => {
         expect(state).toEqual(expenses);
     });
 });
+
+describe('expensesReducer', () => {
+    test('should set expenses', () => {
+        const action = {
+            type: 'SET_EXPENSES',
+            expenses: [expenses[1]]
+        };
+        const state = expensesReducer(expenses, action); // equivalent to dispatch
+        expect(state).toEqual([expenses[1]]);
+    });
+});
