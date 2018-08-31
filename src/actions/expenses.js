@@ -7,7 +7,8 @@ const addExpense = (expense) => ({
 });
 
 const startAddExpense = (expenseData = {}) => { // after integrating redux-thunk, this can work
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
         const {
             description = '', 
             note = '', 
@@ -15,7 +16,7 @@ const startAddExpense = (expenseData = {}) => { // after integrating redux-thunk
             createdAt = 0 
         } = expenseData; // destructuring
         const expense = { description, note, amount, createdAt };
-        return database.ref('expenses').push(expense).then((ref) => {
+        return database.ref(`users/${uid}/expenses`).push(expense).then((ref) => {
             dispatch(addExpense({
                 id: ref.key,
                 ...expense
@@ -30,10 +31,13 @@ const removeExpense = ({ id } = {}) => ({
 });
 
 const startRemoveExpense = ({ id }) => { 
-    return (dispatch) => database.ref(`expenses/${id}`).remove().then(() => {
-        dispatch(removeExpense({ id }));
-    });
-};
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses/${id}`).remove().then(() => {
+            dispatch(removeExpense({ id }));
+        })
+    };
+}
 
 const editExpense = (id, updates) => ({
     type: 'EDIT_EXPENSE',
@@ -42,9 +46,12 @@ const editExpense = (id, updates) => ({
 });
 
 const startEditExpense = (id, updates) => {
-    return (dispatch) => database.ref(`expenses/${id}`).update(updates).then(() => {
-        dispatch(editExpense(id, updates));
-    });
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses/${id}`).update(updates).then(() => {
+            dispatch(editExpense(id, updates));
+        });
+    };
 };
 
 const setExpenses = (expenses) => ({
@@ -53,18 +60,21 @@ const setExpenses = (expenses) => ({
 });
 
 const startSetExpenses = () => {
-    return (dispatch) => database.ref('expenses').once('value').then((snapshot) => {
-        const expenses = [];
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
+            const expenses = [];
 
-        snapshot.forEach((childSnapshot) => {
-            expenses.push({
-                id: childSnapshot.key,
-                ...childSnapshot.val()
+            snapshot.forEach((childSnapshot) => {
+                expenses.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
             });
-        });
 
-        dispatch(setExpenses(expenses));
-    });
+            dispatch(setExpenses(expenses));
+        })
+    };
 };
 
 export { addExpense, startAddExpense, removeExpense, startRemoveExpense, editExpense, startEditExpense, setExpenses, startSetExpenses };
