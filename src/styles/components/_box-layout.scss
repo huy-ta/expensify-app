@@ -16,7 +16,7 @@ $bg-img: url('../assets/images/bg.jpg');
     border-radius: 3px;
     padding: $l-size $l-size;
     text-align: center;
-    width: 25rem;
+    width: 30rem;
 }
 
 .box-layout__title {
@@ -25,6 +25,14 @@ $bg-img: url('../assets/images/bg.jpg');
 }
 
 .box-layout__button {
+    background: $blue;
+    border: none;
+    color: white;
+    font-size: $font-size-large;
+    font-weight: 300;
+    line-height: 1;
+    padding: $s-size;
+    text-decoration: none;
     align-items: center;
     display: flex;
     justify-content: center;
