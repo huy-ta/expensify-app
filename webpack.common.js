@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 module.exports = {
-    entry: './src/index.js', 
+    entry: ['babel-polyfill', './src/index.js'], 
     output: {
         path: distPath,
         filename: 'bundle.js',
@@ -48,7 +48,7 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.(png|svg|jpg|gif)$/,
-            loader: 'file-loader?outputPath=./images/',
+            loader: 'file-loader?outputPath=./images',
             include: path.resolve(__dirname, 'src/assets/images')
         }]
     },

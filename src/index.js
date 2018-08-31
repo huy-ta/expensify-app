@@ -14,6 +14,8 @@ import 'react-dates/initialize';
 
 import { firebase } from './firebase/firebase';
 
+import LoadingPage from './components/LoadingPage';
+
 const store = configureStore();
 
 const appRoot = document.getElementById('app');
@@ -31,8 +33,7 @@ const renderApp = () => {
     }
 };
 
-
-ReactDOM.render(<p>Loading...</p>, appRoot)
+ReactDOM.render(<LoadingPage />, appRoot)
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
