@@ -1,7 +1,7 @@
-# Git Commands
+# Expensify App
 
-git init - Create a new git repository
-git status - View the changes to your project code
-git add - Add files to staging area
-git commit - Creates a new commit with files from staging area
-git log - View recent commits
+- Live Demo: https://expensify-app-quochuytlbk.herokuapp.com
+
+- Version: 1.0
+- Last updated: Aug 26th, 2018.
+- By: Huy Ta Quoc.
